@@ -1,11 +1,23 @@
 <template>
-  <h2>transition-group</h2>
+  <h2>JS动画 ： 未完成</h2>
   <!-- 动画容器 -->
   <transition name="modal">
     <div class="info-wrapper" v-if="showModal">
       <div class="info">哥，你啥也没输入</div>
     </div>
   </transition>
+
+  <span class="dustbin">🗑</span>
+
+  <div class="animate-wrap">
+    <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+    >
+      <div class="animate" v-show="animate.show">📋</div>
+    </transition>
+  </div>
 
   <input type="text" v-model="title" @keydown.enter="addTodo" />
   <button v-if="active < all" @click="clear">清理</button>
@@ -26,7 +38,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 let count = ref(1);
 
 let showModal = ref(false);
@@ -63,9 +75,35 @@ let allDone = computed({
   },
 });
 
+
+
+let animate = reactive({
+  show: false,
+  el: null,
+});
+
+function beforeEnter(el) {
+  let dom = animate.el;
+  let rect = dom.getBoundingClientRect();
+  let x = window.innerWidth - rect.left - 60;
+  let y = rect.top - 10;
+  el.style.transform = `translate(-${x}px, ${y}px)`;
+}
+function enter(el, done) {
+  document.body.offsetHeight;
+  el.style.transform = `translate(0,0)`;
+  el.addEventListener("transitionend", done);
+}
+function afterEnter(el) {
+  animate.show = false;
+  el.style.display = "none";
+}
 function removeTodo(e, i) {
+  animate.el = e.target;
+  animate.show = true;
   todos.value.splice(i, 1);
 }
+
 </script>
 
 <style scoped>
@@ -109,5 +147,19 @@ function removeTodo(e, i) {
 .flip-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+
+.dustbin{
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+.animate-wrap .animate {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 100;
+  transition: all 0.5s linear;
 }
 </style>
