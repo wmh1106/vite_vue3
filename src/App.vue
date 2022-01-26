@@ -8,13 +8,33 @@
       <router-link to="/page3">page3</router-link>
       |
       <router-link to="/page4">page4</router-link>
+      |
+      <router-link to="/page5">page5</router-link>
+      |
+      <router-link to="/page6">page6</router-link>
+      |
+      <router-link to="/page7">page7</router-link>
     </div>
-    <router-view></router-view>
+
+    <router-view v-slot="{ Component }">
+      <transition name="route" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script setup></script>
 
-<style></style>
+<style>
+.route-enter-active,
+.route-leave-active {
+  transition: all 1s ease;
+}
+
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>

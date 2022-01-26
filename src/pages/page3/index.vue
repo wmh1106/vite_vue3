@@ -1,8 +1,6 @@
 <template>
   <div>
-      <h3>page3</h3>
-      <p>style 样式使用变量</p>
-
+      <h3>style 样式使用变量</h3>
       <button @click="changeBtn">按钮</button>
   </div>
 </template>
