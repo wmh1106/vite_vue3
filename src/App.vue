@@ -14,6 +14,12 @@
       <router-link to="/page6">page6</router-link>
       |
       <router-link to="/page7">page7</router-link>
+      |
+      <router-link to="/page8">page8</router-link>
+      |
+      <router-link to="/page9">page9</router-link>
+      |
+      <router-link to="/page10">page10</router-link>
     </div>
 
     <router-view v-slot="{ Component }">
